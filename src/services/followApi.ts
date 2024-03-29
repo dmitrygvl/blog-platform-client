@@ -1,16 +1,16 @@
 import { api } from './api';
 
 export const followApi = api.injectEndpoints({
-  endpoints: builder => ({
+  endpoints: (builder) => ({
     followUser: builder.mutation<void, { followingId: string }>({
-      query: body => ({
+      query: (body) => ({
         url: '/follow',
         method: 'POST',
         body,
       }),
     }),
     unfollowUser: builder.mutation<void, string>({
-      query: userId => ({
+      query: (userId) => ({
         url: `/unfollow/${userId}`,
         method: 'DELETE',
       }),

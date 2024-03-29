@@ -1,5 +1,5 @@
-import type { ReactNode } from 'react';
-import { Children, createContext, useState } from 'react';
+import type { FC, ReactNode } from 'react';
+import { createContext, useState } from 'react';
 
 type ThemeContextType = {
   theme: 'dark' | 'light';
@@ -8,18 +8,22 @@ type ThemeContextType = {
 
 export const ThemeContext = createContext<ThemeContextType>({
   theme: 'dark',
-  toggleTheme: () => {},
+  toggleTheme: () => null,
 });
 
-export const ThemeProvider = ({ children }: { children: ReactNode }) => {
+type Props = {
+  children: ReactNode;
+};
+
+export const ThemeProvider: FC<Props> = ({ children }) => {
   const storedTheme = localStorage.getItem('theme');
   const currentTheme = storedTheme ? (storedTheme as 'dark' | 'light') : 'dark';
 
   const [theme, setTheme] = useState(currentTheme);
 
   const toggleTheme = () => {
-    setTheme(prevTheme => {
-      const newTheme = prevTheme === 'dark' ? 'light' : 'dark';
+    setTheme((prevTheme) => {
+      const newTheme = prevTheme === 'light' ? 'dark' : 'light';
       localStorage.setItem('theme', newTheme);
       return newTheme;
     });

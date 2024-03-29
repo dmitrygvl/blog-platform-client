@@ -2,12 +2,12 @@ import type { User } from '../app/types';
 import { api } from './api';
 
 export const userApi = api.injectEndpoints({
-  endpoints: builder => ({
+  endpoints: (builder) => ({
     login: builder.mutation<
       { token: string },
       { email: string; password: string }
     >({
-      query: userData => ({
+      query: (userData) => ({
         url: '/login',
         method: 'POST',
         body: userData,
@@ -17,7 +17,7 @@ export const userApi = api.injectEndpoints({
       { email: string; password: string },
       { email: string; password: string }
     >({
-      query: userData => ({
+      query: (userData) => ({
         url: '/register',
         method: 'POST',
         body: userData,
@@ -30,7 +30,7 @@ export const userApi = api.injectEndpoints({
       }),
     }),
     getUserById: builder.query<User, string>({
-      query: id => ({
+      query: (id) => ({
         url: `/users/${id}`,
         method: 'GET',
       }),

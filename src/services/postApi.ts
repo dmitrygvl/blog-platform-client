@@ -2,9 +2,9 @@ import type { Post } from '../app/types';
 import { api } from './api';
 
 export const postApi = api.injectEndpoints({
-  endpoints: builder => ({
+  endpoints: (builder) => ({
     createPost: builder.mutation<Post, { content: string }>({
-      query: postData => ({
+      query: (postData) => ({
         url: '/posts',
         method: 'POST',
         body: postData,
@@ -17,13 +17,13 @@ export const postApi = api.injectEndpoints({
       }),
     }),
     getPostById: builder.query<Post, string>({
-      query: id => ({
+      query: (id) => ({
         url: `/posts/${id}`,
         method: 'GET',
       }),
     }),
     deletePost: builder.mutation<void, string>({
-      query: id => ({
+      query: (id) => ({
         url: `posts/${id}`,
         method: 'DELETE',
       }),
