@@ -5,6 +5,7 @@ import { useLazyCurrentQuery, useLoginMutation } from '../services/userApi';
 import { useNavigate } from 'react-router-dom';
 import Input from '../components/Input';
 import { hasErrorField } from '../utils/hasErrorField';
+import ErrorMessage from '../components/ErrorMessage';
 
 type LoginForm = {
   email: string;
@@ -62,6 +63,7 @@ const Login: FC<Props> = ({ setSelected }) => {
         type="password"
         required="Обязательное поле"
       />
+      <ErrorMessage error={error} />
       <p className="text-center text-small">
         Нет аккаунта?{' '}
         <Link
