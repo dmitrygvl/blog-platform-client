@@ -118,3 +118,4 @@ storybook-static
 stories
 __mocks__
 tailwind.config.js
+postcss.config.js
