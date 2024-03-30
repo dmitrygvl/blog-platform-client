@@ -50,7 +50,7 @@ export const selectIsAuthenticated = (state: RootState) =>
   state.user.isAuthenticated;
 
 export const selectUser = (state: RootState) => state.user.user;
-export const selectCurrent = (state: RootState) => state.user.current;
+export const selectCurrentUser = (state: RootState) => state.user.current;
 
 export const { logout, resetUser } = userSlice.actions;
 
