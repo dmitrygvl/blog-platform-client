@@ -1,22 +1,31 @@
-import type { User } from '../app/types';
+import type { User } from '../types';
 import { api } from './api';
+
+type Token = {
+  token: string;
+};
+
+type LoginData = {
+  email: string;
+  password: string;
+};
+
+type RegisterData = {
+  email: string;
+  password: string;
+  name: string;
+};
 
 export const userApi = api.injectEndpoints({
   endpoints: (builder) => ({
-    login: builder.mutation<
-      { token: string },
-      { email: string; password: string }
-    >({
+    login: builder.mutation<Token, LoginData>({
       query: (userData) => ({
         url: '/login',
         method: 'POST',
         body: userData,
       }),
     }),
-    register: builder.mutation<
-      { email: string; password: string },
-      { email: string; password: string }
-    >({
+    register: builder.mutation<RegisterData, RegisterData>({
       query: (userData) => ({
         url: '/register',
         method: 'POST',

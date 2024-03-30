@@ -1,5 +1,5 @@
 import { api } from './api';
-import type { Like } from '../app/types';
+import type { Like } from '../types';
 
 export const likeApi = api.injectEndpoints({
   endpoints: (builder) => ({

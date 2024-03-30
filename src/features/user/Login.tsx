@@ -1,7 +1,10 @@
 import { useState, type FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { Button, Link } from '@nextui-org/react';
-import { useLazyCurrentQuery, useLoginMutation } from '../../services/userApi';
+import {
+  useLazyCurrentQuery,
+  useLoginMutation,
+} from '../../app/services/userApi';
 import { useNavigate } from 'react-router-dom';
 import Input from '../../components/Input';
 import { hasErrorField } from '../../utils/hasErrorField';

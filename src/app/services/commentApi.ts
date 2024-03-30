@@ -1,5 +1,5 @@
 import { api } from './api';
-import type { Comment } from '../app/types';
+import type { Comment } from '../types';
 
 export const commentApi = api.injectEndpoints({
   endpoints: (builder) => ({

@@ -1,4 +1,4 @@
-import type { Post } from '../app/types';
+import type { Post } from '../types';
 import { api } from './api';
 
 export const postApi = api.injectEndpoints({
