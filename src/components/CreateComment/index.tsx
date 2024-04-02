@@ -2,15 +2,15 @@ import { type FC } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Button, Textarea } from '@nextui-org/react';
 import { IoMdCreate } from 'react-icons/io';
-import {
-  useCreatePostMutation,
-  useLazyGetAllPostsQuery,
-} from '../../app/services/postApi';
+import { useLazyGetPostByIdQuery } from '../../app/services/postApi';
 import ErrorMessage from '../ErrorMessage';
+import { useParams } from 'react-router-dom';
+import { useCreateCommentMutation } from '../../app/services/commentApi';
 
-const CreatePost: FC = () => {
-  const [createPost] = useCreatePostMutation();
-  const [triggerAllPosts] = useLazyGetAllPostsQuery();
+const CreateComment: FC = () => {
+  const { id } = useParams<{ id: string }>();
+  const [createComment] = useCreateCommentMutation();
+  const [getPostById] = useLazyGetPostByIdQuery();
 
   const {
     handleSubmit,
@@ -23,9 +23,11 @@ const CreatePost: FC = () => {
 
   const onSubmitForm = handleSubmit(async (data) => {
     try {
-      await createPost({ content: data.post }).unwrap();
-      setValue('post', '');
-      await triggerAllPosts().unwrap();
+      if (id) {
+        await createComment({ content: data.comment, postId: id }).unwrap();
+        setValue('comment', '');
+        await getPostById(id).unwrap();
+      }
     } catch (error) {
       console.error(error);
     }
@@ -34,7 +36,7 @@ const CreatePost: FC = () => {
   return (
     <form className="flex-grow pb-5" onSubmit={onSubmitForm}>
       <Controller
-        name="post"
+        name="comment"
         control={control}
         defaultValue=""
         rules={{
@@ -44,22 +46,23 @@ const CreatePost: FC = () => {
           <Textarea
             {...field}
             labelPlacement="outside"
-            placeholder="Ваш новый пост"
+            placeholder="Ваш комментарий"
             className="mb-5"
           />
         )}
       />
       {errors && <ErrorMessage error={error} />}
+
       <Button
-        color="success"
+        color="primary"
         className="flex-end"
         endContent={<IoMdCreate />}
         type="submit"
       >
-        Опубликовать
+        Ответить
       </Button>
     </form>
   );
 };
 
-export default CreatePost;
+export default CreateComment;

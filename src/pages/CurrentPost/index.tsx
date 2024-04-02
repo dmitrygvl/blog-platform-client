@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useGetPostByIdQuery } from '../../app/services/postApi';
 import Card from '../../components/Card';
 import GoBackBtn from '../../components/GoBackBtn';
+import CreateComment from '../../components/CreateComment';
 
 const CurrentPost: FC = () => {
   const params = useParams<{ id: string }>();
@@ -38,6 +39,25 @@ const CurrentPost: FC = () => {
         createdAt={createdAt}
         id={id}
       />
+      <div className="mt-10">
+        <CreateComment />
+      </div>
+      <div className="mt-10">
+        {data.comments
+          ? data.comments.map((comment) => (
+              <Card
+                cardFor="comment"
+                key={comment.id}
+                id={id}
+                avatarUrl={comment.user.avatarUrl ?? ''}
+                content={comment.content}
+                name={comment.user.name ?? ''}
+                authorId={comment.userId}
+                commentId={comment.id}
+              />
+            ))
+          : null}
+      </div>
     </>
   );
 };

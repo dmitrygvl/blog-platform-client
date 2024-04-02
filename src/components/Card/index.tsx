@@ -88,6 +88,7 @@ const Card: FC<Props> = ({
         ? await unlikePost(id).unwrap()
         : await likePost({ postId: id }).unwrap();
 
+      // await triggerGetPostById(id).unwrap();
       await refetchPosts();
     } catch (error) {
       if (hasErrorField(error)) {
@@ -110,7 +111,7 @@ const Card: FC<Props> = ({
           navigate('/');
           break;
         case 'comment':
-          await deleteComment(id).unwrap();
+          await deleteComment(commentId).unwrap();
           await refetchPosts();
           break;
         default:
@@ -154,7 +155,7 @@ const Card: FC<Props> = ({
           <div className="flex gap-5 items-center">
             <div onClick={handleClickLikes}>
               <MetaInfo
-                count={commentsCount}
+                count={likesCount}
                 Icon={likedByUser ? FcDislike : MdOutlineFavoriteBorder}
               />
             </div>
