@@ -82,6 +82,22 @@ const Card: FC<Props> = ({
     }
   };
 
+  const handleClickLikes = async () => {
+    try {
+      likedByUser
+        ? await unlikePost(id).unwrap()
+        : await likePost({ postId: id }).unwrap();
+
+      await refetchPosts();
+    } catch (error) {
+      if (hasErrorField(error)) {
+        setError(error.data.error);
+      } else {
+        setError(error as string);
+      }
+    }
+  };
+
   const handleDelete = async () => {
     try {
       switch (cardFor) {
@@ -136,7 +152,7 @@ const Card: FC<Props> = ({
       {cardFor !== 'comment' && (
         <CardFooter className="gap-3">
           <div className="flex gap-5 items-center">
-            <div>
+            <div onClick={handleClickLikes}>
               <MetaInfo
                 count={commentsCount}
                 Icon={likedByUser ? FcDislike : MdOutlineFavoriteBorder}
