@@ -2,6 +2,7 @@ import { type FC } from 'react';
 import { useParams } from 'react-router-dom';
 import { useGetPostByIdQuery } from '../../app/services/postApi';
 import Card from '../../components/Card';
+import GoBackBtn from '../../components/GoBackBtn';
 
 const CurrentPost: FC = () => {
   const params = useParams<{ id: string }>();
@@ -24,6 +25,7 @@ const CurrentPost: FC = () => {
 
   return (
     <>
+      <GoBackBtn />
       <Card
         cardFor="current-post"
         avatarUrl={author.avatarUrl ?? ''}
