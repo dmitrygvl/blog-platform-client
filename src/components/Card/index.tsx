@@ -27,7 +27,7 @@ import MetaInfo from '../MetaInfo';
 import { MdOutlineFavoriteBorder } from 'react-icons/md';
 import { FcDislike } from 'react-icons/fc';
 import ErrorMessage from '../ErrorMessage';
-import { FaRegComment, FaRegCommentAlt } from 'react-icons/fa';
+import { FaRegComment } from 'react-icons/fa';
 import { hasErrorField } from '../../utils/hasErrorField';
 
 type Props = {

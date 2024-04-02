@@ -1,7 +1,6 @@
 import { type FC } from 'react';
 import { useGetAllPostsQuery } from '../../app/services/postApi';
 import CreatePost from '../../components/CreatePost';
-import { DiAptana } from 'react-icons/di';
 import Card from '../../components/Card';
 
 const Posts: FC = () => {
