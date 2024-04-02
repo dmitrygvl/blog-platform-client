@@ -32,7 +32,7 @@ const CreatePost: FC = () => {
   });
 
   return (
-    <form className="flex-grow" onSubmit={onSubmitForm}>
+    <form className="flex-grow pb-5" onSubmit={onSubmitForm}>
       <Controller
         name="post"
         control={control}
