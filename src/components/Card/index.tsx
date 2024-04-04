@@ -95,7 +95,6 @@ const Card: FC<Props> = ({
       if (cardFor === 'post') {
         await triggerGetAllPosts().unwrap();
       }
-      // await refetchPosts();
     } catch (error) {
       if (hasErrorField(error)) {
         setError(error.data.error);

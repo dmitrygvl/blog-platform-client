@@ -17,11 +17,7 @@ type Props = {
 };
 
 const Register: FC<Props> = ({ setSelected }) => {
-  const {
-    handleSubmit,
-    control,
-    formState: { errors },
-  } = useForm<RegisterForm>({
+  const { handleSubmit, control } = useForm<RegisterForm>({
     mode: 'onChange',
     reValidateMode: 'onBlur',
     defaultValues: {
@@ -49,13 +45,6 @@ const Register: FC<Props> = ({ setSelected }) => {
     <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmitForm)}>
       <Input
         control={control}
-        name="name"
-        label="Имя"
-        type="text"
-        required="Обязательное поле"
-      />
-      <Input
-        control={control}
         name="email"
         label="Email"
         type="email"
@@ -66,6 +55,13 @@ const Register: FC<Props> = ({ setSelected }) => {
         name="password"
         label="Пароль"
         type="password"
+        required="Обязательное поле"
+      />
+      <Input
+        control={control}
+        name="name"
+        label="Имя"
+        type="text"
         required="Обязательное поле"
       />
       <ErrorMessage error={error} />

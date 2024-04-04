@@ -1,4 +1,4 @@
-import { type FC } from 'react';
+import { useState, type FC } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Button, Textarea } from '@nextui-org/react';
 import { IoMdCreate } from 'react-icons/io';
@@ -7,10 +7,12 @@ import {
   useLazyGetAllPostsQuery,
 } from '../../app/services/postApi';
 import ErrorMessage from '../ErrorMessage';
+import { hasErrorField } from '../../utils/hasErrorField';
 
 const CreatePost: FC = () => {
   const [createPost] = useCreatePostMutation();
   const [triggerAllPosts] = useLazyGetAllPostsQuery();
+  const [error, setError] = useState('');
 
   const {
     handleSubmit,
@@ -19,15 +21,17 @@ const CreatePost: FC = () => {
     setValue,
   } = useForm();
 
-  const error = errors?.post?.message as string;
-
   const onSubmitForm = handleSubmit(async (data) => {
     try {
       await createPost({ content: data.post }).unwrap();
       setValue('post', '');
       await triggerAllPosts().unwrap();
     } catch (error) {
-      console.error(error);
+      if (hasErrorField(error)) {
+        setError(error.data.error);
+      } else {
+        setError(error as string);
+      }
     }
   });
 

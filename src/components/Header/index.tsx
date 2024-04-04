@@ -29,7 +29,7 @@ const Header: FC = () => {
   return (
     <Navbar>
       <NavbarBrand>
-        <p className="font-bold text-inherit">Blog Platform</p>
+        <p className="font-bold text-4xl text-inherit">Blog Platform</p>
       </NavbarBrand>
       <NavbarContent justify="end">
         <NavbarItem

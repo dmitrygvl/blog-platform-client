@@ -20,11 +20,7 @@ type Props = {
 };
 
 const Login: FC<Props> = ({ setSelected }) => {
-  const {
-    handleSubmit,
-    control,
-    formState: { errors },
-  } = useForm<LoginForm>({
+  const { handleSubmit, control } = useForm<LoginForm>({
     mode: 'onChange',
     reValidateMode: 'onBlur',
     defaultValues: {

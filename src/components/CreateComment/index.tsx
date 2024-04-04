@@ -1,4 +1,4 @@
-import { type FC } from 'react';
+import { useState, type FC } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Button, Textarea } from '@nextui-org/react';
 import { IoMdCreate } from 'react-icons/io';
@@ -6,11 +6,13 @@ import { useLazyGetPostByIdQuery } from '../../app/services/postApi';
 import ErrorMessage from '../ErrorMessage';
 import { useParams } from 'react-router-dom';
 import { useCreateCommentMutation } from '../../app/services/commentApi';
+import { hasErrorField } from '../../utils/hasErrorField';
 
 const CreateComment: FC = () => {
   const { id } = useParams<{ id: string }>();
   const [createComment] = useCreateCommentMutation();
   const [getPostById] = useLazyGetPostByIdQuery();
+  const [error, setError] = useState('');
 
   const {
     handleSubmit,
@@ -18,8 +20,6 @@ const CreateComment: FC = () => {
     formState: { errors },
     setValue,
   } = useForm();
-
-  const error = errors?.post?.message as string;
 
   const onSubmitForm = handleSubmit(async (data) => {
     try {
@@ -29,7 +29,11 @@ const CreateComment: FC = () => {
         await getPostById(id).unwrap();
       }
     } catch (error) {
-      console.error(error);
+      if (hasErrorField(error)) {
+        setError(error.data.error);
+      } else {
+        setError(error as string);
+      }
     }
   });
 

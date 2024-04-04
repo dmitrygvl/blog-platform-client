@@ -53,6 +53,9 @@ const UserProfile: FC = () => {
         await triggerCurrentQuery();
       }
     } catch (error) {
+      if (hasErrorField(error)) {
+        setError(error.data.error);
+      }
       console.error(error);
     }
   };
