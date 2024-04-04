@@ -1,4 +1,4 @@
-import { useEffect, type FC } from 'react';
+import { useEffect, useState, type FC } from 'react';
 import { Button, Card, Image, useDisclosure } from '@nextui-org/react';
 import { useParams } from 'react-router-dom';
 import { resetUser, selectCurrentUser } from '../../features/user/userSlice';
@@ -22,6 +22,8 @@ import { CiEdit } from 'react-icons/ci';
 import ProfileInfo from '../../components/ProfileInfo';
 import { formatToClientDate } from '../../utils/formatToClientDate';
 import CountInfo from '../../components/CountInfo';
+import EditProfile from '../../components/EditProfile';
+import { hasErrorField } from '../../utils/hasErrorField';
 
 const UserProfile: FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -32,6 +34,7 @@ const UserProfile: FC = () => {
   const [unfollowUser] = useUnfollowUserMutation();
   const [triggerGetUserByIdQuery] = useLazyGetUserByIdQuery();
   const [triggerCurrentQuery] = useLazyCurrentQuery();
+  const [error, setError] = useState('');
 
   const dispatch = useAppDispatch();
 
@@ -57,6 +60,20 @@ const UserProfile: FC = () => {
   if (!data) {
     return null;
   }
+
+  const handleClose = async () => {
+    try {
+      if (id) {
+        await triggerGetUserByIdQuery(id);
+        await triggerCurrentQuery();
+        onClose();
+      }
+    } catch (error) {
+      if (hasErrorField(error)) {
+        setError(error.data.error);
+      }
+    }
+  };
 
   return (
     <>
@@ -89,7 +106,9 @@ const UserProfile: FC = () => {
                 {data?.isFollowing ? 'Отписаться' : 'Подписаться'}
               </Button>
             ) : (
-              <Button endContent={<CiEdit />}>Редактировать</Button>
+              <Button endContent={<CiEdit />} onClick={() => onOpen()}>
+                Редактировать
+              </Button>
             )}
           </div>
         </Card>
@@ -108,6 +127,7 @@ const UserProfile: FC = () => {
           </div>
         </Card>
       </div>
+      <EditProfile isOpen={isOpen} onClose={handleClose} user={data} />
     </>
   );
 };

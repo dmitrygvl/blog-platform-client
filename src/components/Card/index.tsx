@@ -88,7 +88,13 @@ const Card: FC<Props> = ({
         ? await unlikePost(id).unwrap()
         : await likePost({ postId: id }).unwrap();
 
-      await triggerGetPostById(id).unwrap();
+      if (cardFor === 'current-post') {
+        await triggerGetPostById(id).unwrap();
+      }
+
+      if (cardFor === 'post') {
+        await triggerGetAllPosts().unwrap();
+      }
       // await refetchPosts();
     } catch (error) {
       if (hasErrorField(error)) {
