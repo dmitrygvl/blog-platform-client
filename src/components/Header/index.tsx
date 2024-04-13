@@ -8,7 +8,7 @@ import {
 } from '@nextui-org/react';
 import { FaRegMoon } from 'react-icons/fa';
 import { LuSunMedium } from 'react-icons/lu';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { CiLogout } from 'react-icons/ci';
 import { ThemeContext } from '../ThemeProvider';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
@@ -29,7 +29,9 @@ const Header: FC = () => {
   return (
     <Navbar>
       <NavbarBrand>
-        <p className="font-bold text-4xl text-inherit">Blog Platform</p>
+        <Link to="/" className="font-bold text-4xl text-inherit">
+          <h1 className="font-bold text-4xl text-inherit">Blog platform</h1>
+        </Link>
       </NavbarBrand>
       <NavbarContent justify="end">
         <NavbarItem
